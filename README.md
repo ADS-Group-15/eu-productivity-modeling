@@ -8,6 +8,8 @@ $ cookiecutter https://github.com/drivendata/cookiecutter-data-science
 
 ```
 $ pipenv run jupyter notebook
+$ pipenv run jupyter labextension install @jupyter-widgets/jupyterlab-manager
+$ pipenv run jupyter labextension install @bokeh/jupyter_bokeh
 ```
 
 A short description of the project.

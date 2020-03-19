@@ -1,11 +1,11 @@
-import pandas as pd
 import os
-import pickle
 from pathlib import Path
 
+import numpy as np
+import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 
 
@@ -16,25 +16,29 @@ def main():
     df = pd.read_csv(os.path.join(data_interim_dir, 'dataset.csv'))
 
     scaler = StandardScaler()
-    df['normalized_per_hour_worked'] = scaler.fit_transform(
-        df[['Compensation of employees per hour worked (Euro)']])
-    df['normalized_per_employee'] = scaler.fit_transform(
-        df[['Compensation per employee (Euro)']])
-    df['normalized_education'] = scaler.fit_transform(df[['education']])
+    df['per_hour_worked'] = scaler.fit_transform(df[['Compensation of employees per hour worked (Euro)']])
+    df['per_employee'] = scaler.fit_transform(df[['Compensation per employee (Euro)']])
+    df['education'] = scaler.fit_transform(df[['education']])
+    df['population'] = scaler.fit_transform(df[['population']])
+    df[['per_hour_worked', 'per_employee', 'education', 'population']].corr()
 
     data = df.dropna()
-    x = data[['normalized_education']]
-    y = data[['normalized_per_hour_worked']]
-    x_train, x_test, y_train, y_test = train_test_split(x, y)
+    features = ['education', 'population']
+    x = data[features]
+    y = data[['per_hour_worked']]
+    scores_on_train = []
+    scores_on_test = []
+    kfold = KFold(n_splits=2, shuffle=True, random_state=42)
+    for train_index, test_index in kfold.split(x):
+        x_train, x_test = x.iloc[train_index], x.iloc[test_index]
+        y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+        model = LinearRegression()
+        model.fit(x_train, y_train)
+        scores_on_train.append(mean_squared_error(y_train, model.predict(x_train)))
+        scores_on_test.append(mean_squared_error(y_test, model.predict(x_test)))
 
-    model = LinearRegression()
-    model.fit(x_train, y_train)
-    print(mean_squared_error(y_train, model.predict(x_train)))
-    print(mean_squared_error(y_test, model.predict(x_test)))
-    print(model.coef_)
-
-    with open(os.path.join(data_interim_dir, 'linear_regression.pkl'), 'wb') as file:
-        pickle.dump(model, file)
+    print(f'Average score on train: {np.mean(scores_on_train)}')
+    print(f'Average score on test: {np.mean(scores_on_test)}')
 
 
 if __name__ == '__main__':

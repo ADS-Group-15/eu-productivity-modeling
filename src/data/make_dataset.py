@@ -3,8 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.data import nama_lp_ulc
-from src.data import trng_lfs_02
+from src.data import nama_lp_ulc, trng_lfs_02, tps00001
 
 
 def main():
@@ -13,11 +12,14 @@ def main():
 
     nama_lp_ulc.process()
     trng_lfs_02.process()
+    tps00001.process()
 
     compensation_df = pd.read_csv(os.path.join(data_interim_dir, 'compensation.csv'))
     education_df = pd.read_csv(os.path.join(data_interim_dir, 'education.csv'))
+    population_df = pd.read_csv(os.path.join(data_interim_dir, 'population.csv'))
 
     df = compensation_df.merge(education_df, on=['year', 'GEO'])
+    df = df.merge(population_df, on=['year', 'GEO'])
     df.to_csv(os.path.join(data_interim_dir, 'dataset.csv'), index=False)
 
 

@@ -1,5 +1,14 @@
-eu-productivity
+EU Productivity
 ==============================
+
+```
+$ pip install cookiecutter
+$ cookiecutter https://github.com/drivendata/cookiecutter-data-science
+```
+
+```
+$ pipenv run jupyter notebook
+```
 
 A short description of the project.
 

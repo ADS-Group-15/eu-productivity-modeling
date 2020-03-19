@@ -20,10 +20,10 @@ def main():
     df['per_employee'] = scaler.fit_transform(df[['Compensation per employee (Euro)']])
     df['education'] = scaler.fit_transform(df[['education']])
     df['population'] = scaler.fit_transform(df[['population']])
-    df[['per_hour_worked', 'per_employee', 'education', 'population']].corr()
+    df['rd_expenditure'] = scaler.fit_transform(df[['rd_expenditure']])
 
     data = df.dropna()
-    features = ['education', 'population']
+    features = ['education', 'population', 'rd_expenditure']
     x = data[features]
     y = data[['per_hour_worked']]
     scores_on_train = []

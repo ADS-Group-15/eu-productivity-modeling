@@ -17,9 +17,12 @@ def main():
     compensation_df = pd.read_csv(os.path.join(data_interim_dir, 'compensation.csv'))
     education_df = pd.read_csv(os.path.join(data_interim_dir, 'education.csv'))
     population_df = pd.read_csv(os.path.join(data_interim_dir, 'population.csv'))
+    rd_expenditure_df = pd.read_csv(os.path.join(data_interim_dir, 'rd_expenditure.csv'))
 
     df = compensation_df.merge(education_df, on=['year', 'GEO'])
     df = df.merge(population_df, on=['year', 'GEO'])
+    df = df.merge(rd_expenditure_df, on=['year', 'GEO'])
+
     df.to_csv(os.path.join(data_interim_dir, 'dataset.csv'), index=False)
 
 

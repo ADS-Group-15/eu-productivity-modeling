@@ -1,5 +1,6 @@
 import re
 
+import pandas as pd
 from iso3166 import countries
 
 country_code_dict = {
@@ -72,10 +73,10 @@ def process(df):
     # Extract flags
     df['flags'] = df['value'].apply(lambda p_str: extract_flags(p_str))
     df['value'] = df['value'].apply(lambda p_str: re.sub('[^\d\.]', '', p_str))
-    df['value'] = df['value'].replace('', None, regex=True)
+    df['value'] = df['value'].replace('', None)
 
     # Convert data types
     df['year'] = df['year'].astype(int)
-    df['value'] = df['value'].astype(float)
+    df['value'] = pd.to_numeric(df['value'], errors='coerce')
 
     return df

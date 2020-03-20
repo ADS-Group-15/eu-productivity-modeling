@@ -15,6 +15,7 @@ seaborn = "*"
 iso3166 = "*"
 sklearn = "*"
 lightgbm = "*"
+interpret = "*"
 
 [requires]
 python_version = "3.7"

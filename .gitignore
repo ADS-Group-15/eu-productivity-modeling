@@ -58,7 +58,7 @@ target/
 
 # DotEnv configuration
 .env
-data
+
 # Database
 *.db
 *.rdb
@@ -74,9 +74,6 @@ data
 
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
-
-# exclude  from source control by default
-/data/
 
 # Mac OS-specific storage files
 .DS_Store

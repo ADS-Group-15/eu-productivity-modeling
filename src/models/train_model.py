@@ -28,7 +28,7 @@ def main():
     y = data[['per_hour_worked']]
     scores_on_train = []
     scores_on_test = []
-    kfold = KFold(n_splits=2, shuffle=True, random_state=42)
+    kfold = KFold(n_splits=5, shuffle=True, random_state=42)
     for train_index, test_index in kfold.split(x):
         x_train, x_test = x.iloc[train_index], x.iloc[test_index]
         y_train, y_test = y.iloc[train_index], y.iloc[test_index]

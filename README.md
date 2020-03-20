@@ -27,7 +27,7 @@ A short description of the project.
 Project Organization
 ------------
 
-The project stucture follows the standard of data science.
+The project structure follows the standard in data science.
 
 ```
 $ pip install cookiecutter

@@ -1,21 +1,38 @@
 EU Productivity
 ==============================
 
+Setup
+------------
+
+Install dependencies
+
 ```
-$ pip install cookiecutter
-$ cookiecutter https://github.com/drivendata/cookiecutter-data-science
+$ pipenv install --dev
 ```
+
+Launch jupyter notebook
 
 ```
 $ pipenv run jupyter notebook
-$ pipenv run jupyter labextension install @jupyter-widgets/jupyterlab-manager
-$ pipenv run jupyter labextension install @bokeh/jupyter_bokeh
+```
+
+Run tests
+
+```
+$ pipenv run pytest
 ```
 
 A short description of the project.
 
 Project Organization
 ------------
+
+The project stucture follows the standard of data science.
+
+```
+$ pip install cookiecutter
+$ cookiecutter https://github.com/drivendata/cookiecutter-data-science
+```
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train`

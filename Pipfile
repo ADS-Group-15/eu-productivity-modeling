@@ -17,6 +17,7 @@ sklearn = "*"
 interpret = "*"
 lightgbm = "*"
 shap = "*"
+optuna = "*"
 
 [requires]
 python_version = "3.7"

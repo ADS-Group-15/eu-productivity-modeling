@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
 from src.data import nama_lp_ulc, trng_lfs_02, tps00001
 from src.features.features import columns_to_fit
@@ -49,22 +49,21 @@ def split_dataset(df, train_size=0.7):
     return train_df, test_df
 
 
-def add_features(df):
-    features = ['education', 'population', 'rd_expenditure']
-    shift_range = [1, 2]
-    for feature in features:
-        for shift in shift_range:
-            df[f'{feature}_shift_{shift}'] = df.sort_values('year').groupby(['GEO'])[feature].shift(shift)
-            df[f'{feature}_diff_{shift}'] = df[f'{feature}_shift_{shift}'] - df[feature]
-
+def add_features(df, features):
     for feature in features:
         df[f'{feature}_mean'] = df.groupby(['GEO'])[feature].transform('mean')
         df[f'{feature}_sum'] = df.groupby(['GEO'])[feature].transform('sum')
 
+    shift_range = [1, 2]
+    for feature in features:
+        for shift in shift_range:
+            df[f'{feature}_shift_{shift}'] = df.sort_values('year').groupby(['GEO'])[feature].shift(shift)
+            df[f'{feature}_diff_{shift}'] = df[feature] - df[f'{feature}_shift_{shift}']
 
-def scale_features(df):
-    for column in columns_to_fit:
-        scaler = StandardScaler()
+
+def scale_features(df, columns):
+    for column in columns:
+        scaler = MinMaxScaler()
         df[column] = scaler.fit_transform(df[[column]])
 
 
@@ -77,10 +76,10 @@ def main():
     merged_df.to_csv(os.path.join(data_interim_dir, 'merged.csv'), index=False)
 
     train_df, test_df = split_dataset(merged_df)
-    add_features(train_df)
-    add_features(test_df)
-    scale_features(train_df)
-    scale_features(test_df)
+    add_features(train_df, ['education', 'population', 'rd_expenditure'])
+    add_features(test_df, ['education', 'population', 'rd_expenditure'])
+    scale_features(train_df, columns_to_fit)
+    scale_features(test_df, columns_to_fit)
 
     train_df.to_csv(os.path.join(data_interim_dir, 'train.csv'), index=False)
     test_df.to_csv(os.path.join(data_interim_dir, 'test.csv'), index=False)

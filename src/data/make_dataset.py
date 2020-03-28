@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 from src.data import nama_lp_ulc, trng_lfs_02, tps00001
+from src.features.features import columns_to_fit
 
 pd.options.mode.chained_assignment = None
 project_dir = Path(__file__).resolve().parents[2]
@@ -62,27 +63,6 @@ def add_features(df):
 
 
 def scale_features(df):
-    columns_to_fit = [
-        'education_mean',
-        'education_sum',
-        'education_shift_1',
-        'education_diff_1',
-        'education_shift_2',
-        'education_diff_2',
-        'population_mean',
-        'population_sum',
-        'population_shift_1',
-        'population_diff_1',
-        'population_shift_2',
-        'population_diff_2',
-        'rd_expenditure_mean',
-        'rd_expenditure_sum',
-        'rd_expenditure_shift_1',
-        'rd_expenditure_diff_1',
-        'rd_expenditure_shift_2',
-        'rd_expenditure_diff_2',
-    ]
-
     for column in columns_to_fit:
         scaler = StandardScaler()
         df[column] = scaler.fit_transform(df[[column]])

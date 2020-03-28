@@ -4,7 +4,7 @@ EU Productivity
 Setup
 ------------
 
-Install dependencies
+Install dependencies. You may need to install [LightGBM](https://github.com/microsoft/LightGBM) on your environment before running `pipenv install` as it requires native libraries.
 
 ```
 $ pipenv install --dev
@@ -27,7 +27,7 @@ A short description of the project.
 Project Organization
 ------------
 
-The project structure follows the standard in data science.
+The project was created using a template for data science.
 
 ```
 $ pip install cookiecutter

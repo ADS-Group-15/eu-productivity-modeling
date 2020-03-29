@@ -50,37 +50,47 @@ def split_dataset(df, train_size=0.7):
 
 
 def add_features(df, features):
-    for feature in features:
-        df[f'{feature}_mean'] = df.groupby(['GEO'])[feature].transform('mean')
-        df[f'{feature}_sum'] = df.groupby(['GEO'])[feature].transform('sum')
-
     shift_range = [1, 2]
     for feature in features:
         for shift in shift_range:
             df[f'{feature}_shift_{shift}'] = df.sort_values('year').groupby(['GEO'])[feature].shift(shift)
             df[f'{feature}_diff_{shift}'] = df[feature] - df[f'{feature}_shift_{shift}']
 
+    agg_params = {}
+    for feature in features:
+        for shift in shift_range:
+            agg_params[f'{feature}_shift_{shift}_mean'] = (f'{feature}_shift_{shift}', 'mean')
+
+    agg = df.groupby('year').agg(**agg_params).reset_index()
+    df = df.merge(agg, on='year')
+
+    for feature in features:
+        for shift in shift_range:
+            df[f'{feature}_shift_{shift}_mean_diff'] = df[f'{feature}_shift_{shift}'] - df[
+                f'{feature}_shift_{shift}_mean']
+    return df
+
 
 def scale_features(df, columns):
+    print(df.columns)
     for column in columns:
+        print(column)
         scaler = MinMaxScaler()
         df[column] = scaler.fit_transform(df[[column]])
 
 
 def main():
     process_dfs()
-    merged_df = merge_dfs()
+    df = merge_dfs()
 
     # We need to drop data unless we have a good solution to impute missing data
-    merged_df = merged_df[merged_df['year'] < 2018]
-    merged_df.to_csv(os.path.join(data_interim_dir, 'merged.csv'), index=False)
+    df = df[df['year'] < 2018]
+    df.to_csv(os.path.join(data_interim_dir, 'dataset.csv'), index=False)
 
-    train_df, test_df = split_dataset(merged_df)
-    add_features(train_df, ['education', 'population', 'rd_expenditure'])
-    add_features(test_df, ['education', 'population', 'rd_expenditure'])
-    scale_features(train_df, columns_to_fit)
-    scale_features(test_df, columns_to_fit)
+    df = add_features(df, ['education', 'population', 'rd_expenditure'])
+    scale_features(df, columns_to_fit)
 
+    train_df, test_df = split_dataset(df)
     train_df.to_csv(os.path.join(data_interim_dir, 'train.csv'), index=False)
     test_df.to_csv(os.path.join(data_interim_dir, 'test.csv'), index=False)
 

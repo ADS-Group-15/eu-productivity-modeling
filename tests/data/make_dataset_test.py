@@ -20,11 +20,14 @@ def test_add_features():
         {'year': 2011, 'value': 2, 'GEO': 'a'},
         {'year': 2012, 'value': 3, 'GEO': 'a'}
     ])
-    make_dataset.add_features(df, ['value'])
-    assert df.iloc[0]['value_mean'] == 2
-    assert df.iloc[0]['value_sum'] == 6
+    df = make_dataset.add_features(df, ['value'])
+    print(df.columns)
     assert df.iloc[2]['value_shift_1'] == 2.0
     assert df.iloc[2]['value_shift_2'] == 1.0
+    assert df.iloc[2]['value_shift_1_mean'] == 2.0
+    assert df.iloc[2]['value_shift_2_mean'] == 1.0
+    assert df.iloc[2]['value_shift_1_mean_diff'] == 0.0
+    assert df.iloc[2]['value_shift_2_mean_diff'] == 0.0
 
 
 def test_scale_features():

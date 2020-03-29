@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error
 
@@ -59,7 +60,7 @@ def train():
     params = trial.params
     params['objective'] = 'regression'
     tuned_gbm = lgb.train(params, dtrain)
-    error = mean_squared_error(y_test, tuned_gbm.predict(x_test))
+    error = np.sqrt(mean_squared_error(y_test, tuned_gbm.predict(x_test)))
     print(f'Error on test: {error}')
 
 

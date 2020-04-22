@@ -23,4 +23,10 @@ columns_to_fit = [
     'fertility_rate_shift_2',
     'fertility_rate_shift_2_mean_diff',
     'fertility_rate_diff_2',
+    'education_funding_shift_1',
+    'education_funding_shift_1_mean_diff',
+    'education_funding_diff_1',
+    'education_funding_shift_2',
+    'education_funding_shift_2_mean_diff',
+    'education_funding_diff_2',
 ]

@@ -23,6 +23,9 @@ gunzip t2020_20.tsv.gz
 curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/rd_p_persocc.tsv.gz
 gunzip rd_p_persocc.tsv.gz
 
+# Fertility rates by age
+curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/demo_frate.tsv.gz
+
 # R&D expenditure by source of funds (percentage)
 # https://ec.europa.eu/eurostat/web/products-datasets/-/tsc00031
 #curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/tsc00031.tsv.gz

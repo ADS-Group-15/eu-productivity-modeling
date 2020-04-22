@@ -17,4 +17,10 @@ columns_to_fit = [
     'rd_expenditure_shift_2',
     'rd_expenditure_shift_2_mean_diff',
     'rd_expenditure_diff_2',
+    'fertility_rate_shift_1',
+    'fertility_rate_shift_1_mean_diff',
+    'fertility_rate_diff_1',
+    'fertility_rate_shift_2',
+    'fertility_rate_shift_2_mean_diff',
+    'fertility_rate_diff_2',
 ]

@@ -17,7 +17,7 @@ def process_dfs():
     trng_lfs_02.process()
     tps00001.process()
     demo_frate.process()
-    educ_fifunds.process()
+    # educ_fifunds.process() # The data range is not desirable (1995-2011)
 
 
 def merge_dfs():
@@ -26,13 +26,13 @@ def merge_dfs():
     population_df = pd.read_csv(os.path.join(data_interim_dir, 'population.csv'))
     rd_expenditure_df = pd.read_csv(os.path.join(data_interim_dir, 'rd_expenditure.csv'))
     frate_df = pd.read_csv(os.path.join(data_interim_dir, 'frate.csv'))
-    education_funding_df = pd.read_csv(os.path.join(data_interim_dir, 'education_funding.csv'))
+    # education_funding_df = pd.read_csv(os.path.join(data_interim_dir, 'education_funding.csv')) # The data range is not desirable (1995-2011)
 
     df = compensation_df.merge(education_df, on=['year', 'GEO'])
     df = df.merge(population_df, on=['year', 'GEO'])
     df = df.merge(rd_expenditure_df, on=['year', 'GEO'])
     df = df.merge(frate_df, on=['year', 'GEO'])
-    df = df.merge(education_funding_df, on=['year', 'GEO'])
+    # df = df.merge(education_funding_df, on=['year', 'GEO'])
 
     df.rename(columns={
         'Compensation of employees per hour worked (Euro)': 'per_hour_worked',
@@ -78,9 +78,7 @@ def add_features(df, features):
 
 
 def scale_features(df, columns):
-    print(df.columns)
     for column in columns:
-        print(column)
         scaler = MinMaxScaler()
         df[column] = scaler.fit_transform(df[[column]])
 
@@ -90,10 +88,10 @@ def main():
     df = merge_dfs()
 
     # We need to drop data unless we have a good solution to impute missing data
-    df = df[df['year'] < 2018]
+    df = df[df['year'] <= 2018]
     df.to_csv(os.path.join(data_interim_dir, 'dataset.csv'), index=False)
 
-    df = add_features(df, ['education', 'population', 'rd_expenditure', 'fertility_rate', 'education_funding'])
+    df = add_features(df, ['education', 'population', 'rd_expenditure', 'fertility_rate'])
     scale_features(df, columns_to_fit)
 
     train_df, test_df = split_dataset(df)

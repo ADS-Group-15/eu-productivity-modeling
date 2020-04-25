@@ -50,7 +50,10 @@ def process():
             'European Union - 15 countries (1995-2004)',
             'Euro area (EA11-1999, EA12-2001, EA13-2007, EA15-2008, EA16-2009, EA17-2011, EA18-2014, EA19-2015)',
             'Euro area - 19 countries  (from 2015)',
-            'Euro area - 12 countries (2001-2006)']
+            'Euro area - 12 countries (2001-2006)',
+            'Montenegro',
+            'North  Macedonia',
+            'Serbia']
         df = df[~df['GEO'].isin(geos_to_exclude)]
 
         df['TIME'] = df['TIME'].astype(int)
@@ -59,19 +62,11 @@ def process():
         df['Flag and Footnotes'] = df['Flag and Footnotes'].apply(nantonone)
         dfs.append(df)
 
-    compensation_per_hour_df = dfs[0]
-    compensation_per_hour_df.rename(columns={'Value': 'Compensation of employees per hour worked (Euro)'}, inplace=True)
-
-    compensation_per_employee_df = dfs[1]
-    compensation_per_employee_df.rename(columns={'Value': 'Compensation per employee (Euro)'}, inplace=True)
-
-    compensation_per_hour_df = compensation_per_hour_df[
-        ['TIME', 'GEO', 'Compensation of employees per hour worked (Euro)']]
-    compensation_per_employee_df = compensation_per_employee_df[
-        ['TIME', 'GEO', 'Compensation per employee (Euro)']]
-
-    df = compensation_per_hour_df.merge(compensation_per_employee_df, on=['TIME', 'GEO'])
-    df.rename(columns={'TIME': 'year'}, inplace=True)
+    df = dfs[0]
+    df.rename(columns={
+        'Value': 'compensation',
+        'TIME': 'year',
+    }, inplace=True)
 
     df.to_csv(os.path.join(data_interim_dir, 'compensation.csv'), index=False)
 

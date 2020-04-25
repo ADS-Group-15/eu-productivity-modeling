@@ -35,8 +35,7 @@ def merge_dfs():
     # df = df.merge(education_funding_df, on=['year', 'GEO'])
 
     df.rename(columns={
-        'Compensation of employees per hour worked (Euro)': 'per_hour_worked',
-        'Compensation per employee (Euro)': 'per_employee'
+        'Compensation of employees per hour worked (Euro)': 'compensation',
     }, inplace=True)
 
     return df

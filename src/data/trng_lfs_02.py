@@ -18,8 +18,7 @@ def process():
     df = df[['year', 'GEO', 'value', 'sex']]
     df = df.groupby(['GEO', 'year'])['value'].mean().reset_index()
     df.rename(columns={
-        'value': 'education',
-        'sex': 'education_sex',
+        'value': 'education'
     }, inplace=True)
 
     df.to_csv(os.path.join(data_interim_dir, 'education.csv'), index=False)

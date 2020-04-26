@@ -23,4 +23,10 @@ columns_to_fit = [
     'fertility_rate_shift_2',
     'fertility_rate_shift_2_mean_diff',
     'fertility_rate_diff_2',
+    'hrst_shift_1',
+    'hrst_shift_1_mean_diff',
+    'hrst_diff_1',
+    'hrst_shift_2',
+    'hrst_shift_2_mean_diff',
+    'hrst_diff_2',
 ]

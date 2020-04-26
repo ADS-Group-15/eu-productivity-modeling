@@ -71,6 +71,7 @@ def process(df):
     df['GEO'] = df['GEO'].apply(normalize_country_name)
 
     # Extract flags
+    df['value'] = df['value'].astype(str)
     df['flags'] = df['value'].apply(lambda p_str: extract_flags(p_str))
     df['value'] = df['value'].apply(lambda p_str: re.sub(r'[^\d.]', '', p_str))
     df['value'] = df['value'].replace('', None)

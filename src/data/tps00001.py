@@ -11,7 +11,7 @@ def process():
     data_raw_dir = os.path.join(project_dir, 'data', 'raw')
     data_interim_dir = os.path.join(project_dir, 'data', 'interim')
 
-    file_path = os.path.join(data_raw_dir, 'tps00001.tsv')
+    file_path = os.path.join(data_raw_dir, 'tps00001.tsv.gz')
     df = pd.read_csv(file_path, delimiter='\t')
     df = preprocessor.process(df)
     df = df[['year', 'GEO', 'value']]

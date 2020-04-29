@@ -27,6 +27,10 @@ curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadLi
 # https://ec.europa.eu/eurostat/web/products-datasets/-/tsc00025
 curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/tsc00025.tsv.gz
 
+# Gross domestic product
+# https://ec.europa.eu/eurostat/web/products-datasets/-/teina011
+#curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/teina011.tsv.gz
+
 # Funding of education
 # https://ec.europa.eu/eurostat/web/products-datasets/-/educ_fifunds
 #curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/educ_fifunds.tsv.gz

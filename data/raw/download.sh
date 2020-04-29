@@ -31,6 +31,10 @@ curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadLi
 # https://ec.europa.eu/eurostat/web/products-datasets/-/earn_nt_taxrate
 curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/earn_nt_taxrate.tsv.gz
 
+# Imports of goods and services in % of GDP
+# https://ec.europa.eu/eurostat/web/products-datasets/-/tet00004
+curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/tet00004.tsv.gz
+
 # Gross domestic product
 # https://ec.europa.eu/eurostat/web/products-datasets/-/teina011
 #curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/teina011.tsv.gz

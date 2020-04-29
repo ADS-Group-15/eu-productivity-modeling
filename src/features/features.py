@@ -35,4 +35,10 @@ columns_to_fit = [
     'tax_rate_shift_2',
     'tax_rate_shift_2_mean_diff',
     'tax_rate_diff_2',
+    'imports_shift_1',
+    'imports_shift_1_mean_diff',
+    'imports_diff_1',
+    'imports_shift_2',
+    'imports_shift_2_mean_diff',
+    'imports_diff_2',
 ]

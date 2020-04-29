@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-from src.data import nama_lp_ulc, trng_lfs_02, tps00001, demo_frate, tsc00025
+from src.data import nama_lp_ulc, trng_lfs_02, tps00001, demo_frate, tsc00025, earn_nt_taxrate
 from src.features.features import columns_to_fit
 
 pd.options.mode.chained_assignment = None
@@ -18,6 +18,7 @@ def process_dfs():
     tps00001.process()
     demo_frate.process()
     tsc00025.process()
+    earn_nt_taxrate.process()
 
 
 def merge_dfs():
@@ -27,12 +28,14 @@ def merge_dfs():
     rd_expenditure_df = pd.read_csv(os.path.join(data_interim_dir, 'rd_expenditure.csv'))
     frate_df = pd.read_csv(os.path.join(data_interim_dir, 'frate.csv'))
     hrst_df = pd.read_csv(os.path.join(data_interim_dir, 'hrst.csv'))
+    tax_rate_df = pd.read_csv(os.path.join(data_interim_dir, 'tax_rate.csv'))
 
     df = compensation_df.merge(education_df, on=['year', 'GEO'])
     df = df.merge(population_df, on=['year', 'GEO'])
     df = df.merge(rd_expenditure_df, on=['year', 'GEO'])
     df = df.merge(frate_df, on=['year', 'GEO'])
     df = df.merge(hrst_df, on=['year', 'GEO'])
+    df = df.merge(tax_rate_df, on=['year', 'GEO'])
 
     df.rename(columns={
         'Compensation of employees per hour worked (Euro)': 'compensation',
@@ -90,7 +93,7 @@ def main():
     df = df[df['year'] <= 2018]
     df.to_csv(os.path.join(data_interim_dir, 'dataset.csv'), index=False)
 
-    df = add_features(df, ['education', 'population', 'rd_expenditure', 'fertility_rate', 'hrst'])
+    df = add_features(df, ['education', 'population', 'rd_expenditure', 'fertility_rate', 'hrst', 'tax_rate'])
     scale_features(df, columns_to_fit)
 
     train_df, test_df = split_dataset(df)

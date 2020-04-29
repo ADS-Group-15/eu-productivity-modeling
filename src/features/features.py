@@ -29,4 +29,10 @@ columns_to_fit = [
     'hrst_shift_2',
     'hrst_shift_2_mean_diff',
     'hrst_diff_2',
+    'tax_rate_shift_1',
+    'tax_rate_shift_1_mean_diff',
+    'tax_rate_diff_1',
+    'tax_rate_shift_2',
+    'tax_rate_shift_2_mean_diff',
+    'tax_rate_diff_2',
 ]

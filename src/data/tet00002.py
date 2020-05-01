@@ -14,7 +14,8 @@ def process():
     file_path = os.path.join(data_raw_dir, 'tet00002.tsv.gz')
     df = pd.read_csv(file_path, delimiter='\t')
     df = preprocessor.process(df)
-    df = df[['year', 'GEO', 'value']]
+    df = df[['year', 'GEO', 'value', 'indic_et']]
+    df = df.groupby(['GEO', 'year']).sum().reset_index()
     df.rename(columns={
         'value': 'trade'
     }, inplace=True)

@@ -14,7 +14,8 @@ def process():
     file_path = os.path.join(data_raw_dir, 'tsc00025.tsv.gz')
     df = pd.read_csv(file_path, delimiter='\t')
     df = preprocessor.process(df)
-    df = df[['year', 'GEO', 'value']]
+    df = df[['year', 'GEO', 'value', 'sex']]
+    df = df.groupby(['GEO', 'year']).mean().reset_index()
     df.rename(columns={
         'value': 'hrst'
     }, inplace=True)

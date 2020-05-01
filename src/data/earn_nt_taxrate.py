@@ -14,7 +14,8 @@ def process():
     file_path = os.path.join(data_raw_dir, 'earn_nt_taxrate.tsv.gz')
     df = pd.read_csv(file_path, delimiter='\t')
     df = preprocessor.process(df)
-    df = df[['year', 'GEO', 'value']]
+    df = df[['year', 'GEO', 'value', 'ecase']]
+    df = df.groupby(['GEO', 'year']).mean().reset_index()
     df.rename(columns={
         'value': 'tax_rate'
     }, inplace=True)

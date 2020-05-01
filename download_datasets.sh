@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd data/raw
+
 # Compensation
 # Download file before executing from https://ec.europa.eu/eurostat/tgm/graph.do?tab=graph&plugin=1&pcode=tesem160&language=en&toolbox=sort
 unzip nama_10_lp_ulc.zip
@@ -46,7 +48,6 @@ curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadLi
 # R&D expenditure by source of funds (percentage)
 # https://ec.europa.eu/eurostat/web/products-datasets/-/tsc00031
 #curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/tsc00031.tsv.gz
-
 
 # Population by age group (percentage)
 # https://ec.europa.eu/eurostat/web/products-datasets/-/tps00010

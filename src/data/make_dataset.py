@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-from src.data import nama_lp_ulc, trng_lfs_02, tps00001, demo_frate, tsc00025, earn_nt_taxrate, tet00004
+from src.data import nama_lp_ulc, trng_lfs_02, tps00001, demo_frate, tsc00025, earn_nt_taxrate, tet00004, tet00002
 from src.features.features import columns_to_fit
 
 pd.options.mode.chained_assignment = None
@@ -20,6 +20,7 @@ def process_dfs():
     tsc00025.process()
     earn_nt_taxrate.process()
     tet00004.process()
+    tet00002.process()
 
 
 def merge_dfs():
@@ -31,6 +32,7 @@ def merge_dfs():
     hrst_df = pd.read_csv(os.path.join(data_interim_dir, 'hrst.csv'))
     tax_rate_df = pd.read_csv(os.path.join(data_interim_dir, 'tax_rate.csv'))
     imports_df = pd.read_csv(os.path.join(data_interim_dir, 'imports.csv'))
+    trade_df = pd.read_csv(os.path.join(data_interim_dir, 'trade.csv'))
 
     df = compensation_df.merge(education_df, on=['year', 'GEO'])
     df = df.merge(population_df, on=['year', 'GEO'])
@@ -39,6 +41,7 @@ def merge_dfs():
     df = df.merge(hrst_df, on=['year', 'GEO'])
     df = df.merge(tax_rate_df, on=['year', 'GEO'])
     df = df.merge(imports_df, on=['year', 'GEO'])
+    df = df.merge(trade_df, on=['year', 'GEO'])
 
     df.rename(columns={
         'Compensation of employees per hour worked (Euro)': 'compensation',
@@ -104,6 +107,7 @@ def main():
         'hrst',
         'tax_rate',
         'imports',
+        'trade',
     ])
     scale_features(df, columns_to_fit)
 

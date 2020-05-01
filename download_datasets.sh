@@ -37,6 +37,10 @@ curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadLi
 # https://ec.europa.eu/eurostat/web/products-datasets/-/tet00004
 curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/tet00004.tsv.gz
 
+# International trade, by reporting country, total product
+# https://ec.europa.eu/eurostat/web/products-datasets/-/tet00002
+curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/tet00002.tsv.gz
+
 # Gross domestic product
 # https://ec.europa.eu/eurostat/web/products-datasets/-/teina011
 #curl -OL https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/teina011.tsv.gz

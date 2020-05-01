@@ -6,4 +6,5 @@ columns_to_fit = [
     'hrst_shift_1',
     'tax_rate_shift_1',
     'imports_shift_1',
+    'trade_shift_1',
 ]

@@ -1,28 +1,22 @@
 import os
+import pickle
 from pathlib import Path
 
+import lightgbm as lgb
 import numpy as np
-import pandas as pd
+import optuna
 from sklearn.metrics import mean_squared_error
 
-from src.features.features import columns_to_fit
+from src.data import data_loader
+
+project_dir = Path(__file__).resolve().parents[2]
 
 
 def train():
-    print('Train LightGBM...')
-    project_dir = Path(__file__).resolve().parents[2]
-    data_interim_dir = os.path.join(project_dir, 'data', 'interim')
+    print('Load dataset...')
+    x_train, y_train, x_test, y_test = data_loader.load()
 
-    train_df = pd.read_csv(os.path.join(data_interim_dir, 'train.csv'))
-    test_df = pd.read_csv(os.path.join(data_interim_dir, 'test.csv'))
-
-    train_temp = train_df[columns_to_fit + ['compensation']].dropna()
-    test_temp = test_df[columns_to_fit + ['compensation']].dropna()
-    x_train, y_train = train_temp[columns_to_fit], train_temp[['compensation']]
-    x_test, y_test = test_temp[columns_to_fit], test_temp[['compensation']]
-
-    import lightgbm as lgb
-    import optuna
+    print('Search LightGBM parameters...')
 
     def objective(trial):
         param = {
@@ -56,12 +50,18 @@ def train():
     for key, value in trial.params.items():
         print(" {}: {}".format(key, value))
 
+    print('Train LightGBM...')
     dtrain = lgb.Dataset(x_train, label=y_train)
     params = trial.params
     params['objective'] = 'regression'
     tuned_gbm = lgb.train(params, dtrain)
     error = np.sqrt(mean_squared_error(y_test, tuned_gbm.predict(x_test)))
     print(f'Error on test: {error}')
+
+    print(f'Save trained model...')
+    with open(os.path.join(project_dir, 'models', 'gbm.pkl'), 'wb') as file:
+        pickle.dump(tuned_gbm, file)
+    print('Done')
 
 
 if __name__ == '__main__':

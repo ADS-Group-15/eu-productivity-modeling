@@ -1,31 +1,30 @@
 import os
+import pickle
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-from src.features.features import columns_to_fit
+from src.data import data_loader
+
+project_dir = Path(__file__).resolve().parents[2]
 
 
 def train():
+    print('Load dataset...')
+    x_train, y_train, x_test, y_test = data_loader.load()
+
     print('Train LinearRegression...')
-    project_dir = Path(__file__).resolve().parents[2]
-    data_interim_dir = os.path.join(project_dir, 'data', 'interim')
-
-    train_df = pd.read_csv(os.path.join(data_interim_dir, 'train.csv'))
-    test_df = pd.read_csv(os.path.join(data_interim_dir, 'test.csv'))
-
-    train_temp = train_df[columns_to_fit + ['compensation']].dropna()
-    test_temp = test_df[columns_to_fit + ['compensation']].dropna()
-    x_train, y_train = train_temp[columns_to_fit], train_temp[['compensation']]
-    x_test, y_test = test_temp[columns_to_fit], test_temp[['compensation']]
-
     lr = LinearRegression()
     lr.fit(x_train, y_train)
     error = np.sqrt(mean_squared_error(y_test, lr.predict(x_test)))
     print(f'Error on test: {error}')
+
+    print(f'Save trained model...')
+    with open(os.path.join(project_dir, 'models', 'lr.pkl'), 'wb') as file:
+        pickle.dump(lr, file)
+    print('Done')
 
 
 if __name__ == '__main__':

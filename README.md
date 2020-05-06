@@ -1,14 +1,31 @@
-EU Productivity
-==============================
+# EU Productivity Modeling
 
-Setup
-------------
+This repository contains models predicting compensation using datasets available on [Eurostat](https://ec.europa.eu/eurostat/home).
+
+## Datasets
+
+- Target:
+  - [Labour productivity per person employed and hour worked](https://ec.europa.eu/eurostat/tgm/graph.do?tab=graph&plugin=1&pcode=tesem160&language=en&toolbox=sort)
+- Features:
+  - [Participation rate in education and training (last 4 weeks) by sex, age and educational attainment level](https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_02)
+  - [Population on 1 January](https://ec.europa.eu/eurostat/web/products-datasets/-/tps00001)
+  - [Gross domestic expenditure on R&D (GERD)](https://ec.europa.eu/eurostat/web/products-datasets/-/t2020_20)
+  - [Fertility rates by age](https://ec.europa.eu/eurostat/web/products-datasets/-/demo_frate)
+  - [Human resources in science and technology (HRST)](https://ec.europa.eu/eurostat/web/products-datasets/-/tsc00025)
+  - [Tax rate](https://ec.europa.eu/eurostat/web/products-datasets/-/earn_nt_taxrate)
+  - [International trade, by reporting country, total product](https://ec.europa.eu/eurostat/web/products-datasets/-/tet00002)
+
+To train models, you need to download the target dataset and put it into `data/raw/`. Then run `download_datasets.sh` to download feature datasets.
+
+## Dependencies
 
 Install dependencies. You may need to install [LightGBM](https://github.com/microsoft/LightGBM) on your environment before running `pipenv install` as it requires native libraries.
 
 ```
 $ pipenv install --dev
 ```
+
+## Development
 
 Launch jupyter notebook
 
@@ -24,8 +41,7 @@ $ pipenv run pytest
 
 A short description of the project.
 
-Project Organization
-------------
+# Project Organization
 
 The project was created using a template for data science.
 
